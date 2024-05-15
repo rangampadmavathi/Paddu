@@ -1,0 +1,18 @@
+@RestController
+@RequestMapping("/api")
+public class UploadController {
+
+    @Autowired
+    private EmbeddingService embeddingService;
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            String content = new String(file.getBytes());
+            embeddingService.processText(content);
+            return ResponseEntity.ok("File uploaded and processed successfully.");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File upload failed.");
+        }
+    }
+}

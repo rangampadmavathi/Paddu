@@ -1,0 +1,25 @@
+@Service
+public class ChatService {
+
+    @Autowired
+    private MilvusClient milvusClient;
+
+    public String getResponse(String prompt) {
+        List<Float> queryEmbedding = getEmbedding(prompt);
+        List<String> similarChunks = searchSimilarChunks(queryEmbedding);
+        return generateResponse(prompt, similarChunks);
+    }
+
+    private List<Float> getEmbedding(String text) {
+        // Call OpenAI API to get embedding
+    }
+
+    private List<String> searchSimilarChunks(List<Float> queryEmbedding) {
+        // Search Milvus for similar embeddings
+        // Return list of similar text chunks
+    }
+
+    private String generateResponse(String prompt, List<String> context) {
+        // Generate response using OpenAI API with context
+    }
+}

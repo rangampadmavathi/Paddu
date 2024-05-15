@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RAG Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chat {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>RAG Chatbot</h1>
+    <h2>Upload Document</h2>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Upload</button>
+
+    <h2>Chat</h2>
+    <div id="chat">
+        <textarea id="userInput" rows="4" cols="50"></textarea><br>
+        <button onclick="sendMessage()">Send</button>
+        <div id="chatBox"></div>
+    </div>
+
+    <script>
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const response = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            alert(await response.text());
+        }
+
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt: userInput })
+            });
+
+            const chatBox = document.getElementById('chatBox');
+            const message = await response.text();
+            chatBox.innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
+            chatBox.innerHTML += `<p><strong>Bot:</strong> ${message}</p>`;
+        }
+    </script>
+</body>
+</html>

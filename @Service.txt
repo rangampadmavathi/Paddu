@@ -1,0 +1,28 @@
+@Service
+public class EmbeddingService {
+
+    @Autowired
+    private MilvusClient milvusClient;
+
+    public void processText(String text) {
+        List<String> chunks = splitTextIntoChunks(text);
+        for (String chunk : chunks) {
+            List<Float> embedding = getEmbedding(chunk);
+            storeEmbedding(embedding);
+        }
+    }
+
+    private List<String> splitTextIntoChunks(String text) {
+        // Split text into chunks
+        // Return list of chunks
+    }
+
+    private List<Float> getEmbedding(String text) {
+        // Call OpenAI API to get embedding
+        // Return embedding as List<Float>
+    }
+
+    private void storeEmbedding(List<Float> embedding) {
+        // Store embedding in Milvus
+    }
+}

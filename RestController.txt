@@ -1,0 +1,13 @@
+@RestController
+@RequestMapping("/api")
+public class ChatController {
+
+    @Autowired
+    private ChatService chatService;
+
+    @PostMapping("/chat")
+    public ResponseEntity<String> chat(@RequestBody ChatRequest request) {
+        String response = chatService.getResponse(request.getPrompt());
+        return ResponseEntity.ok(response);
+    }
+}
